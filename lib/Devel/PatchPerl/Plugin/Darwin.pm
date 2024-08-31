@@ -63,6 +63,10 @@ my @patch = (
 	perl => [ qr/^5\.25\.]d+/, qr/^5\.26\.[0-3]$/, qr/^5\.27\.\d+/, qr/^5\.28\.[0-3]$/ ],
 	subs => [ [ \&_patch_darwin_libperl_test5250 ] ],
     },
+    {
+	perl => [ '5.10.1', qr/^5\.1[1-9]\.\d+$/, qr/^5\.[2-9]\d\.\d+$/, qr/^5\.\d\d\d+\.\d+$/],
+	subs => [ [ \&_patch_hints_darwin_apple_silicon ] ],
+    },
 );
 
 sub patchperl {
@@ -648,6 +652,20 @@ sub _patch_darwin_libperl_test5250 {
                  print "# $^O ignoring $nm output: $_";
                  next;
              }
+END
+    Devel::PatchPerl::_patch($patch);
+}
+
+sub _patch_hints_darwin_apple_silicon {
+    my $patch = <<'END';
+--- hints/darwin.sh
++++ hints/darwin.sh
+@@ -227,6 +227,7 @@
+     case `uname -p` in 
+     powerpc) arch=ppc64 ;;
+     i386) arch=x86_64 ;;
++    arm) arch=arm64 ;;
+     *) cat <<EOM >&4
 END
     Devel::PatchPerl::_patch($patch);
 }

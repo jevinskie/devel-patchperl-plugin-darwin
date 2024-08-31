@@ -68,7 +68,7 @@ my @patch = (
 	subs => [ [ \&_patch_t_porting_globvar_non_exported ] ],
     },
     {
-	perl => [ '5.10.1', qr/^5\.1[1-9]\.\d+$/, qr/^5\.[2-9]\d\.\d+$/, qr/^5\.\d\d\d+\.\d+$/],
+	perl => [ '5.8.9', '5.10.1', qr/^5\.1[1-9]\.\d+$/, qr/^5\.[2-9]\d\.\d+$/, qr/^5\.\d\d\d+\.\d+$/],
 	subs => [ [ \&_patch_hints_darwin_apple_silicon ] ],
     },
 );

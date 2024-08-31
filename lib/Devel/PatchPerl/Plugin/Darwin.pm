@@ -64,6 +64,10 @@ my @patch = (
 	subs => [ [ \&_patch_darwin_libperl_test5250 ] ],
     },
     {
+	perl => [ qr/^5\.15\.[3-9]$/, qr/^5\.1[6-9]\.\d+$/, qr/^5\.2\d\.\d+$/, qr/^5\.3[0-8]\.\d+$/, qr/^5\.39\.[0-4]$/],
+	subs => [ [ \&_patch_t_porting_globvar_non_exported ] ],
+    },
+    {
 	perl => [ '5.10.1', qr/^5\.1[1-9]\.\d+$/, qr/^5\.[2-9]\d\.\d+$/, qr/^5\.\d\d\d+\.\d+$/],
 	subs => [ [ \&_patch_hints_darwin_apple_silicon ] ],
     },
@@ -666,6 +670,19 @@ sub _patch_hints_darwin_apple_silicon {
      i386) arch=x86_64 ;;
 +    arm) arch=arm64 ;;
      *) cat <<EOM >&4
+END
+    Devel::PatchPerl::_patch($patch);
+}
+
+sub _patch_t_porting_globvar_non_exported {
+    my $patch = <<'END';
+--- t/porting/globvar.t
++++ t/porting/globvar.t
+--- globvar.orig.t	2024-08-31 03:17:22
++++ globvar.patched.t	2024-08-31 03:18:23
+@@ -23,7 +23,7 @@
+-my $defined = qr/^[0-9a-fA-F]{8,16}\s+[^Uu]\s+_?/m;
++my $defined = qr/^[0-9a-fA-F]{8,16}\s+[^Uusdt]\s+_?/m;
 END
     Devel::PatchPerl::_patch($patch);
 }

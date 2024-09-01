@@ -660,7 +660,7 @@ sub _patch_t_porting_globvar_non_exported {
     my $patch = <<'END';
 --- t/porting/globvar.t
 +++ t/porting/globvar.t
-@@ -23,7 +23,7 @@
+@@ -23,1 +23,1 @@
 -my $defined = qr/^[0-9a-fA-F]{8,16}\s+[^Uu]\s+_?/m;
 +my $defined = qr/^[0-9a-fA-F]{8,16}\s+[^Uusdt]\s+_?/m;
 END
